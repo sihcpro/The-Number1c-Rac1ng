@@ -1,0 +1,3 @@
+<launch>
+  <node name="traffic_sign" pkg="traffic_sign" type="main.py" output="screen"/>
+</launch>

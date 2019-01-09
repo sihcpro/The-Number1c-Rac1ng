@@ -25,6 +25,9 @@ public:
     static const int chooseRight = 1;
     static const int chooseLeft = 2;
     static const int chooseStraight = 0;
+    int goodChoise = chooseStraight;
+
+    void setVelocity(float, float);
 
 private:
     float errorAngle(const Point &dst);
@@ -40,6 +43,10 @@ private:
 
     float minVelocity = 10;
     float maxVelocity = 50;
+    float velocity = 0;
+    float aRun = 5;
+    float aStop = 15;
+    // t_ now;
 
     float preError;
 
@@ -51,7 +58,6 @@ private:
     int t_kI;
     int t_kD;
 
-    int goodChoise = chooseRight;
 };
 
 #endif

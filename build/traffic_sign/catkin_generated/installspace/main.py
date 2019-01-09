@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/env python2
 
 import roslib
 roslib.load_manifest('traffic_sign')
@@ -11,3 +11,6 @@ if __name__ == '__main__':
         pass
     else:
         print 'ok'
+
+def funny():
+    print "ha ha"

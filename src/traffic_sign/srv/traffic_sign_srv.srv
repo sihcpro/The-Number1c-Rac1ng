@@ -1,0 +1,1 @@
+int64 traffic_sign_type

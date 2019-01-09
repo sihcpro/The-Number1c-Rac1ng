@@ -1,0 +1,7 @@
+#! /usr/bin/env python
+
+from traffic_sign import hello
+
+
+if __name__ == '__main__':
+    hello.say('my friend!')

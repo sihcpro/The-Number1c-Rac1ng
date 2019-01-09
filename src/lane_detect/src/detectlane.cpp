@@ -11,6 +11,7 @@ int DetectLane::BIRDVIEW_WIDTH = 240;
 int DetectLane::BIRDVIEW_HEIGHT = 320;
 int DetectLane::VERTICAL = 0;
 int DetectLane::HORIZONTAL = 1;
+int DetectLane::carMaxSpeed = 50;
 Point DetectLane::null = Point();
 
 DetectLane::DetectLane() {
@@ -24,6 +25,8 @@ DetectLane::DetectLane() {
     cvCreateTrackbar("HighV", "Threshold", &maxThreshold[2], 255);
 
     cvCreateTrackbar("Shadow Param", "Threshold", &shadowParam, 255);
+
+    cvCreateTrackbar("Car max speed", "Threshold", &carMaxSpeed, 50);
 }
 
 DetectLane::~DetectLane(){}
@@ -42,7 +45,7 @@ void DetectLane::update(const Mat &src)
 {
     Mat img = preProcess(src);
     
-    imshow("img", img);
+    // imshow("img", img);
     vector<Mat> layers1 = splitLayer(img);
     // imshow("debug3", layers1);
     vector<vector<Point> > points1 = centerRoadSide(layers1);
@@ -56,18 +59,14 @@ void DetectLane::update(const Mat &src)
     debugView = Mat::zeros(img.size(), CV_8UC3);
     lane = Mat::zeros(img.size(), CV_8UC3);
 
-    for (int i = 0; i < points1.size(); i++)
-     {
-        for (int j = 0; j < points1[i].size(); j++)
-        {
+    for (int i = 0; i < points1.size(); i++) {
+        for (int j = 0; j < points1[i].size(); j++) {
             circle(birdView, points1[i][j], 1, Scalar(125,125,125), 2, 8, 0 );
         }
     }
 
-    for (int i = 0; i < points1.size(); i++)
-     {
-        for (int j = 0; j < points1[i].size(); j++)
-        {
+    for (int i = 0; i < points1.size(); i++) {
+        for (int j = 0; j < points1[i].size(); j++) {
             circle(birdView, points1[i][j], 1, Scalar(0,0,255), 2, 8, 0 );
         }
     }
@@ -80,17 +79,22 @@ void DetectLane::update(const Mat &src)
     //     }
     // }
 
+    for (int i = 0; i < this->otherLane.size(); i++) {
+        for(int j = 1; j < this->otherLane[i].size(); j++) {
+            if (this->otherLane[i][j] != null) {
+                circle(lane, this->otherLane[i][j], 1, Scalar(0,255,0), 2, 8, 0 );
+            }
+        }
+    }
 
-    for (int i = 1; i < leftLane.size(); i++)
-    {
+    for (int i = 1; i < leftLane.size(); i++) {
         if (leftLane[i] != null)
         {
             circle(lane, leftLane[i], 1, Scalar(0,0,255), 2, 8, 0 );
         }
     }
 
-    for (int i = 1; i < rightLane.size(); i++)
-    {
+    for (int i = 1; i < rightLane.size(); i++) {
         if (rightLane[i] != null) {
             circle(lane, rightLane[i], 1, Scalar(255,0,0), 2, 8, 0 );
         }
@@ -104,17 +108,23 @@ Mat DetectLane::preProcess(const Mat &src)
     Mat imgThresholded, imgHSV, dst, debug, debug2;
 
     cvtColor(src, imgHSV, COLOR_BGR2HSV);
-    cvtColor(src, debug, COLOR_BGR2HSV);
+    // imshow("img", laneInShadow(src));
+    // cvtColor(src, debug, COLOR_BGR2HSV);
+    Mat shadow_lane = laneInShadow(src);
 
-    imshow("debug", debug);
-    imshow("debug2", birdViewTranform(debug));
+    // imshow("debug", shadow_lane);
+    // imshow("debug2", both_lane);
 
     inRange(imgHSV,
             Scalar(minThreshold[0], minThreshold[1], minThreshold[2]),
             Scalar(maxThreshold[0], maxThreshold[1], maxThreshold[2]),
             imgThresholded);
 
-    dst = birdViewTranform(imgThresholded);
+    Mat both_lane;
+    cv::add(shadow_lane, imgThresholded, both_lane);
+    imshow("debug3", both_lane);
+
+    dst = birdViewTranform(both_lane);
 
     imshow("Bird View", dst);
 
@@ -131,23 +141,31 @@ Mat DetectLane::preProcess(const Mat &src)
 Mat DetectLane::laneInShadow(const Mat &src)
 {
     Mat shadowMask, shadow, imgHSV, shadowHSV, laneShadow;
-    cvtColor(src, imgHSV, COLOR_BGR2HSV);
 
+    cvtColor(src, imgHSV, COLOR_BGR2HSV);
     inRange(imgHSV,
             Scalar(minShadowTh[0], minShadowTh[1], minShadowTh[2]),
             Scalar(maxShadowTh[0], maxShadowTh[1], maxShadowTh[2]),
             shadowMask);
+    imshow("debug", shadowMask);
 
     src.copyTo(shadow, shadowMask);
-
     cvtColor(shadow, shadowHSV, COLOR_BGR2HSV);
-
     inRange(shadowHSV,
             Scalar(minLaneInShadow[0], minLaneInShadow[1], minLaneInShadow[2]), 
             Scalar(maxLaneInShadow[0], maxLaneInShadow[1], maxLaneInShadow[2]), 
             laneShadow);
+    imshow("debug2", laneShadow);
 
-    return laneShadow;
+    Mat imgSihcDetect, sihcDetected;
+    cvtColor(src, imgSihcDetect, COLOR_BGR2HSV);
+    inRange(imgSihcDetect,
+            Scalar(minLaneInShadowSihc[0], minLaneInShadowSihc[1], minLaneInShadowSihc[2]), 
+            Scalar(maxLaneInShadowSihc[0], maxLaneInShadowSihc[1], maxLaneInShadowSihc[2]), 
+            sihcDetected);
+    imshow("img", sihcDetected);
+
+    return sihcDetected;
 }
 
 void DetectLane::fillLane(Mat &src)
@@ -278,7 +296,8 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
     static vector<Point> lane1, lane2;
     lane1.clear();
     lane2.clear();
-    
+    this->otherLane.clear();
+
     leftLane.clear();
     rightLane.clear();
     for (int i = 0; i < BIRDVIEW_HEIGHT / slideThickness; i ++)
@@ -347,13 +366,13 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
         }
     }
 
-    for (int i = 0; i < points.size(); i++) {
-        printf("%3d %2d : ", (int)points[i].size(), i);
-        for (int j = 0; j < points[i].size(); j++) {
-            printf(" %3d-%2d; ", pointMap[i][j], points[i][j].x);
-        }
-        printf("\n");
-    }
+    // for (int i = 0; i < points.size(); i++) {
+    //     printf("%3d %2d : ", (int)points[i].size(), i);
+    //     for (int j = 0; j < points[i].size(); j++) {
+    //         printf(" %3d-%2d; ", pointMap[i][j], points[i][j].x);
+    //     }
+    //     printf("\n");
+    // }
 
     if (max1 == -1) return;
 
@@ -382,12 +401,13 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
 
 //////////////////////////////////////////////////////////
     vector< vector< Point > > stain;
+    vector< vector< Point > > stain2;
     vector< Point > stainStart;
     vector< Point > stainEnd;
     int tmpMax = 0;
     for (int i = 0; i < points.size()-9; i++) {
         for (int j = 0; j < points[i].size(); j++) {
-            if ( pointMap[i][j] > 5 ) {
+            if ( pointMap[i][j] > 6 ) {
                 vector< Point > newStain;
                 tmpMax = pointMap[i][j];
                 Point tmpPoint = Point2i(i, j);
@@ -400,13 +420,35 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
                     tmpPoint.x++;
                     tmpMax--;
                     newStain.push_back(points[tmpPoint.x][tmpPoint.y]);
-                    pointMap[tmpPoint.x][tmpPoint.y] = 5;
+                    pointMap[tmpPoint.x][tmpPoint.y] = 6;
                 }
                 stainStart.push_back(points[tmpPoint.x][tmpPoint.y]);
                 stain.push_back(newStain);
                 // printf("\n");
             }
         }
+
+        // for (int j = points[i].size() - 1; i >= 0; j--) {
+        //     if ( pointMap[i][j] > 5 ) {
+        //         vector< Point > newStain;
+        //         tmpMax = pointMap[i][j];
+        //         Point tmpPoint = Point2i(i, j);
+        //         stainEnd.push_back(points[tmpPoint.x][tmpPoint.y]);
+        //         newStain.push_back(points[tmpPoint.x][tmpPoint.y]);
+        //         while( tmpMax > 2 ) {
+        //             // printf("%d : %d -> ", tmpPoint.x, tmpPoint.y);
+
+        //             tmpPoint.y = prePoint[tmpPoint.x][tmpPoint.y];
+        //             tmpPoint.x++;
+        //             tmpMax--;
+        //             newStain.push_back(points[tmpPoint.x][tmpPoint.y]);
+        //             pointMap[tmpPoint.x][tmpPoint.y] = 5;
+        //         }
+        //         stainStart.push_back(points[tmpPoint.x][tmpPoint.y]);
+        //         stain.push_back(newStain);
+        //         // printf("\n");
+        //     }
+        // }
     }
 
     // printf("leng of Strain : %d   => ", (int) stain.size());
@@ -426,16 +468,27 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
     // }
     // printf("\n");
 
-    int idRightLane = -1, idLeftLane = -1;
-    for (int i = 0; i < stainStart.size(); i++) {
-        if (stainStart[i].y > 200) {
-            if (stainStart[i].x > 125) {
-                if (idRightLane == -1 || ( stainStart[i].x < stainStart[idRightLane].x)) {
+    int idRightLane = -1, idLeftLane = -1, xRight, xLeft, xRightEnd, xLeftEnd;
+    Point start, end;
+    for (int i = 0; i < stain.size(); i++) {
+        start = stain[i][stain[i].size() - 1];
+        end = stain[i][0];
+        if (start.y > 200) {
+            if (start.x > 120) {
+                if (idRightLane == -1 || (start.x < xRight) ||
+                    (start.x == xRight && end.x < xRightEnd))
+                {
                     idRightLane = i;
+                    xRight = start.x;
+                    xRightEnd = end.x;
                 }
-            } else if (stainStart[i].x < 115) {
-                if (idLeftLane == -1 || ( stainStart[i].x < stainStart[idLeftLane].x)) {
+            } else if (start.x < 120) {
+                if (idLeftLane == -1  || (start.x > xLeft) ||
+                    (start.x == xLeft && end.x > xLeftEnd))
+                {
                     idLeftLane = i;
+                    xLeft = start.x;
+                    xLeftEnd = end.x;
                 }
             }
         }
@@ -464,7 +517,15 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
         this->maxR = 0;
     }
 
+    if(idRightLane == -1 && idLeftLane != -1) {
 
+    }
+
+    for(int i = 0; i < stain.size(); i++) {
+        if(i != idLeftLane && i != idRightLane) {
+            this->otherLane.push_back(stain[i]);
+        }
+    }
 
 
     // vector<Point> subLane1(lane1.begin(), lane1.begin() + 5);
@@ -504,7 +565,7 @@ void DetectLane::detectLeftRight(const vector<vector<Point> > &points)
     //     this->maxR = lane1.size();
     // }
     // printf("max: %2d|%2d  LaneX : %3d|%3d\n", this->maxL, this->maxR, min(lane1X, lane2X), max(lane1X, lane2X));
-    printf("max: %2d|%2d\n", this->maxL, this->maxR);
+    // printf("max: %2d|%2d\n", this->maxL, this->maxR);
 }
 
 std::vector<int> DetectLane::getMax(){

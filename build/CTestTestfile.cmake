@@ -7,6 +7,6 @@
 subdirs("gtest")
 subdirs("file_server")
 subdirs("mastering_ros_demo_pkg")
-subdirs("lane_detect")
 subdirs("traffic_sign")
+subdirs("lane_detect")
 subdirs("video_stream")

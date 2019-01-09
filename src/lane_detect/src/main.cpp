@@ -1,8 +1,10 @@
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
-#include <cv_bridge/cv_bridge.h>
+#include <std_msgs/Int64.h>
 
+#include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
+#include <stdio.h>
 
 #include "detectlane.h"
 #include "carcontrol.h"
@@ -14,10 +16,10 @@ VideoCapture capture("video.avi");
 DetectLane *detect;
 CarControl *car;
 int skipFrame = 1;
+int traffic_sign_effect = 0;
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
-
     cv_bridge::CvImagePtr cv_ptr;
     Mat out;
     try
@@ -48,6 +50,36 @@ void videoProcess()
     }
 }
 
+int max_effect_times = 50;
+void trafficSignCallback(const std_msgs::Int64::ConstPtr traffic_sign_type) {
+    long long type = traffic_sign_type->data;
+    switch(type) {
+        case 2:
+            if(car->goodChoise != car->chooseLeft)
+                ROS_INFO("Nhan dien bien bao re trai\n");
+            car->goodChoise = car->chooseLeft;
+            traffic_sign_effect = max_effect_times;
+            car->setVelocity(10,30);
+            break;
+        case 3:
+            if(car->goodChoise != car->chooseRight)
+                ROS_INFO("Nhan dien bien bao re phai\n");
+            car->goodChoise = car->chooseRight;
+            traffic_sign_effect = max_effect_times;
+            car->setVelocity(10,30);
+            break;
+        default:
+            if(traffic_sign_effect > 1) {
+                traffic_sign_effect--;
+            } else if(traffic_sign_effect == 1 ) {
+                ROS_INFO("Tap trung di thang\n");
+                traffic_sign_effect--;
+                car->goodChoise = car->chooseStraight;
+                car->setVelocity(10,50);
+            }
+    }
+}
+
 int main(int argc, char **argv)
 {
     Mat imgThresholded, dst;
@@ -70,8 +102,8 @@ int main(int argc, char **argv)
 
         ros::NodeHandle nh;
         image_transport::ImageTransport it(nh);
-        image_transport::Subscriber sub = it.subscribe("Team1_image", 1, imageCallback);
-
+        image_transport::Subscriber sub = it.subscribe("Team503_image", 1, imageCallback);
+        ros::Subscriber sub2 = nh.subscribe("detect_traffic_sign/message", 2, trafficSignCallback);
         ros::spin();
     } else {
         videoProcess();

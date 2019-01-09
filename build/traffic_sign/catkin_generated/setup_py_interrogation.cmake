@@ -1,5 +1,5 @@
 set(traffic_sign_SETUP_PY_VERSION "0.0.0")
-set(traffic_sign_SETUP_PY_SCRIPTS "launch/traffic_sign.launch")
+set(traffic_sign_SETUP_PY_SCRIPTS "")
 set(traffic_sign_SETUP_PY_PACKAGES "traffic_sign")
 set(traffic_sign_SETUP_PY_PACKAGE_DIRS "src/traffic_sign")
 set(traffic_sign_SETUP_PY_MODULES "")

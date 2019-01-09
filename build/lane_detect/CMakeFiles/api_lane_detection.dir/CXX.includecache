@@ -43,6 +43,8 @@ algorithm
 /home/sihc/catkin_ws/src/lane_detect/src/carcontrol.cpp
 carcontrol.h
 /home/sihc/catkin_ws/src/lane_detect/src/carcontrol.h
+ctime
+-
 
 /home/sihc/catkin_ws/src/lane_detect/src/detectlane.cpp
 detectlane.h

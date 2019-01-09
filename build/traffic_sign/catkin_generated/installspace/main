@@ -1,0 +1,8 @@
+#!/usr/bin/env python2
+
+import roslib
+roslib.load_manifest("traffic_sign")
+from main import funny
+
+print "ok"
+funny()

@@ -1,0 +1,2 @@
+set(traffic_sign_MESSAGE_FILES "/home/sihc/catkin_ws/src/test_msgs/msg/my_file.msg")
+set(traffic_sign_SERVICE_FILES "")

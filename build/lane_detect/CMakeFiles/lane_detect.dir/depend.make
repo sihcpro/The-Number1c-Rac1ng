@@ -77,6 +77,7 @@ lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/
 lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/sensor_msgs/image_encodings.h
 lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/std_msgs/Float32.h
 lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/std_msgs/Header.h
+lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/std_msgs/Int64.h
 lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/xmlrpcpp/XmlRpcDecl.h
 lane_detect/CMakeFiles/lane_detect.dir/src/main.cpp.o: /opt/ros/melodic/include/xmlrpcpp/XmlRpcValue.h
 

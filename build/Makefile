@@ -1156,6 +1156,162 @@ demo_topic_subscriber/fast:
 .PHONY : demo_topic_subscriber/fast
 
 #=============================================================================
+# Target rules for targets named traffic_sign_geneus
+
+# Build rule for target.
+traffic_sign_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_geneus
+.PHONY : traffic_sign_geneus
+
+# fast build rule for target.
+traffic_sign_geneus/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_geneus.dir/build.make traffic_sign/CMakeFiles/traffic_sign_geneus.dir/build
+.PHONY : traffic_sign_geneus/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_gencpp
+
+# Build rule for target.
+traffic_sign_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_gencpp
+.PHONY : traffic_sign_gencpp
+
+# fast build rule for target.
+traffic_sign_gencpp/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/build
+.PHONY : traffic_sign_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_generate_messages
+
+# Build rule for target.
+traffic_sign_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_generate_messages
+.PHONY : traffic_sign_generate_messages
+
+# fast build rule for target.
+traffic_sign_generate_messages/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/build
+.PHONY : traffic_sign_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_generate_messages_nodejs
+
+# Build rule for target.
+traffic_sign_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_generate_messages_nodejs
+.PHONY : traffic_sign_generate_messages_nodejs
+
+# fast build rule for target.
+traffic_sign_generate_messages_nodejs/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/build
+.PHONY : traffic_sign_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named _traffic_sign_generate_messages_check_deps_traffic_sign_msg
+
+# Build rule for target.
+_traffic_sign_generate_messages_check_deps_traffic_sign_msg: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _traffic_sign_generate_messages_check_deps_traffic_sign_msg
+.PHONY : _traffic_sign_generate_messages_check_deps_traffic_sign_msg
+
+# fast build rule for target.
+_traffic_sign_generate_messages_check_deps_traffic_sign_msg/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/build.make traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/build
+.PHONY : _traffic_sign_generate_messages_check_deps_traffic_sign_msg/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_generate_messages_lisp
+
+# Build rule for target.
+traffic_sign_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_generate_messages_lisp
+.PHONY : traffic_sign_generate_messages_lisp
+
+# fast build rule for target.
+traffic_sign_generate_messages_lisp/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/build
+.PHONY : traffic_sign_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_generate_messages_cpp
+
+# Build rule for target.
+traffic_sign_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_generate_messages_cpp
+.PHONY : traffic_sign_generate_messages_cpp
+
+# fast build rule for target.
+traffic_sign_generate_messages_cpp/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/build
+.PHONY : traffic_sign_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_gennodejs
+
+# Build rule for target.
+traffic_sign_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_gennodejs
+.PHONY : traffic_sign_gennodejs
+
+# fast build rule for target.
+traffic_sign_gennodejs/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/build.make traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/build
+.PHONY : traffic_sign_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_generate_messages_py
+
+# Build rule for target.
+traffic_sign_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_generate_messages_py
+.PHONY : traffic_sign_generate_messages_py
+
+# fast build rule for target.
+traffic_sign_generate_messages_py/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/build
+.PHONY : traffic_sign_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_genpy
+
+# Build rule for target.
+traffic_sign_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_genpy
+.PHONY : traffic_sign_genpy
+
+# fast build rule for target.
+traffic_sign_genpy/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_genpy.dir/build.make traffic_sign/CMakeFiles/traffic_sign_genpy.dir/build
+.PHONY : traffic_sign_genpy/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_genlisp
+
+# Build rule for target.
+traffic_sign_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_genlisp
+.PHONY : traffic_sign_genlisp
+
+# fast build rule for target.
+traffic_sign_genlisp/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/build
+.PHONY : traffic_sign_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named traffic_sign_generate_messages_eus
+
+# Build rule for target.
+traffic_sign_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 traffic_sign_generate_messages_eus
+.PHONY : traffic_sign_generate_messages_eus
+
+# fast build rule for target.
+traffic_sign_generate_messages_eus/fast:
+	$(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/build
+.PHONY : traffic_sign_generate_messages_eus/fast
+
+#=============================================================================
 # Target rules for targets named lane_detect
 
 # Build rule for target.
@@ -1283,6 +1439,18 @@ help:
 	@echo "... demo_topic_publisher"
 	@echo "... mastering_ros_demo_pkg_gennodejs"
 	@echo "... demo_topic_subscriber"
+	@echo "... traffic_sign_geneus"
+	@echo "... traffic_sign_gencpp"
+	@echo "... traffic_sign_generate_messages"
+	@echo "... traffic_sign_generate_messages_nodejs"
+	@echo "... _traffic_sign_generate_messages_check_deps_traffic_sign_msg"
+	@echo "... traffic_sign_generate_messages_lisp"
+	@echo "... traffic_sign_generate_messages_cpp"
+	@echo "... traffic_sign_gennodejs"
+	@echo "... traffic_sign_generate_messages_py"
+	@echo "... traffic_sign_genpy"
+	@echo "... traffic_sign_genlisp"
+	@echo "... traffic_sign_generate_messages_eus"
 	@echo "... lane_detect"
 	@echo "... api_lane_detection"
 	@echo "... video_stream"

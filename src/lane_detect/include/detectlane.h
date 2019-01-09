@@ -32,6 +32,7 @@ public:
 
     static int VERTICAL;
     static int HORIZONTAL;
+    static int carMaxSpeed;
 
     static Point null; // 
 private:
@@ -52,6 +53,8 @@ private:
     int maxShadowTh[3] = {120, 81, 171};
     int minLaneInShadow[3] = {90, 43, 97};
     int maxLaneInShadow[3] = {120, 80, 171};
+    int minLaneInShadowSihc[3] = {100, 70, 50};
+    int maxLaneInShadowSihc[3] = {130, 100, 150};
     int binaryThreshold = 180;
 
     int skyLine = 85;
@@ -60,6 +63,7 @@ private:
     int maxR;
 
     vector<Point> leftLane, rightLane;
+    vector< vector<Point> > otherLane;
 };
 
 #endif

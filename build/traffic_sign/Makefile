@@ -68,37 +68,17 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
 
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -112,6 +92,28 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -123,17 +125,15 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -167,6 +167,186 @@ depend:
 	cd /home/sihc/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_geneus.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_geneus.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_geneus.dir/rule
+
+# Convenience name for target.
+traffic_sign_geneus: traffic_sign/CMakeFiles/traffic_sign_geneus.dir/rule
+
+.PHONY : traffic_sign_geneus
+
+# fast build rule for target.
+traffic_sign_geneus/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_geneus.dir/build.make traffic_sign/CMakeFiles/traffic_sign_geneus.dir/build
+.PHONY : traffic_sign_geneus/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/rule
+
+# Convenience name for target.
+traffic_sign_gencpp: traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/rule
+
+.PHONY : traffic_sign_gencpp
+
+# fast build rule for target.
+traffic_sign_gencpp/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_gencpp.dir/build
+.PHONY : traffic_sign_gencpp/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/rule
+
+# Convenience name for target.
+traffic_sign_generate_messages: traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/rule
+
+.PHONY : traffic_sign_generate_messages
+
+# fast build rule for target.
+traffic_sign_generate_messages/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages.dir/build
+.PHONY : traffic_sign_generate_messages/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+traffic_sign_generate_messages_nodejs: traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/rule
+
+.PHONY : traffic_sign_generate_messages_nodejs
+
+# fast build rule for target.
+traffic_sign_generate_messages_nodejs/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_nodejs.dir/build
+.PHONY : traffic_sign_generate_messages_nodejs/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/rule
+.PHONY : traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/rule
+
+# Convenience name for target.
+_traffic_sign_generate_messages_check_deps_traffic_sign_msg: traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/rule
+
+.PHONY : _traffic_sign_generate_messages_check_deps_traffic_sign_msg
+
+# fast build rule for target.
+_traffic_sign_generate_messages_check_deps_traffic_sign_msg/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/build.make traffic_sign/CMakeFiles/_traffic_sign_generate_messages_check_deps_traffic_sign_msg.dir/build
+.PHONY : _traffic_sign_generate_messages_check_deps_traffic_sign_msg/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+traffic_sign_generate_messages_lisp: traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/rule
+
+.PHONY : traffic_sign_generate_messages_lisp
+
+# fast build rule for target.
+traffic_sign_generate_messages_lisp/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_lisp.dir/build
+.PHONY : traffic_sign_generate_messages_lisp/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+traffic_sign_generate_messages_cpp: traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/rule
+
+.PHONY : traffic_sign_generate_messages_cpp
+
+# fast build rule for target.
+traffic_sign_generate_messages_cpp/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_cpp.dir/build
+.PHONY : traffic_sign_generate_messages_cpp/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/rule
+
+# Convenience name for target.
+traffic_sign_gennodejs: traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/rule
+
+.PHONY : traffic_sign_gennodejs
+
+# fast build rule for target.
+traffic_sign_gennodejs/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/build.make traffic_sign/CMakeFiles/traffic_sign_gennodejs.dir/build
+.PHONY : traffic_sign_gennodejs/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/rule
+
+# Convenience name for target.
+traffic_sign_generate_messages_py: traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/rule
+
+.PHONY : traffic_sign_generate_messages_py
+
+# fast build rule for target.
+traffic_sign_generate_messages_py/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_py.dir/build
+.PHONY : traffic_sign_generate_messages_py/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_genpy.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_genpy.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_genpy.dir/rule
+
+# Convenience name for target.
+traffic_sign_genpy: traffic_sign/CMakeFiles/traffic_sign_genpy.dir/rule
+
+.PHONY : traffic_sign_genpy
+
+# fast build rule for target.
+traffic_sign_genpy/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_genpy.dir/build.make traffic_sign/CMakeFiles/traffic_sign_genpy.dir/build
+.PHONY : traffic_sign_genpy/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/rule
+
+# Convenience name for target.
+traffic_sign_genlisp: traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/rule
+
+.PHONY : traffic_sign_genlisp
+
+# fast build rule for target.
+traffic_sign_genlisp/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/build.make traffic_sign/CMakeFiles/traffic_sign_genlisp.dir/build
+.PHONY : traffic_sign_genlisp/fast
+
+# Convenience name for target.
+traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/rule:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/rule
+.PHONY : traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+traffic_sign_generate_messages_eus: traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/rule
+
+.PHONY : traffic_sign_generate_messages_eus
+
+# fast build rule for target.
+traffic_sign_generate_messages_eus/fast:
+	cd /home/sihc/catkin_ws/build && $(MAKE) -f traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/build.make traffic_sign/CMakeFiles/traffic_sign_generate_messages_eus.dir/build
+.PHONY : traffic_sign_generate_messages_eus/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -174,12 +354,24 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... edit_cache"
-	@echo "... list_install_components"
-	@echo "... test"
-	@echo "... install/local"
-	@echo "... rebuild_cache"
 	@echo "... install"
+	@echo "... traffic_sign_geneus"
+	@echo "... traffic_sign_gencpp"
+	@echo "... traffic_sign_generate_messages"
+	@echo "... install/local"
+	@echo "... traffic_sign_generate_messages_nodejs"
+	@echo "... _traffic_sign_generate_messages_check_deps_traffic_sign_msg"
+	@echo "... traffic_sign_generate_messages_lisp"
+	@echo "... traffic_sign_generate_messages_cpp"
+	@echo "... traffic_sign_gennodejs"
+	@echo "... traffic_sign_generate_messages_py"
+	@echo "... traffic_sign_genpy"
+	@echo "... test"
+	@echo "... edit_cache"
+	@echo "... traffic_sign_genlisp"
+	@echo "... rebuild_cache"
+	@echo "... traffic_sign_generate_messages_eus"
+	@echo "... list_install_components"
 .PHONY : help
 
 

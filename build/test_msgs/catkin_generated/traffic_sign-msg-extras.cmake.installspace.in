@@ -1,0 +1,2 @@
+set(traffic_sign_MESSAGE_FILES "msg/my_file.msg")
+set(traffic_sign_SERVICE_FILES "")

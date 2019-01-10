@@ -1,0 +1,8 @@
+#!/usr/bin/env python2
+
+import roslib
+roslib.load_manifest("Team503")
+from detect_traffic_sign import main
+
+print "detect_traffic_sign"
+main()

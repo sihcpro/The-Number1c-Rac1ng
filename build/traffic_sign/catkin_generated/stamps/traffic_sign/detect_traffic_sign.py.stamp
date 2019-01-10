@@ -17,7 +17,7 @@ import tensorflow as tf
 from CNN_3channels_1conv import deepnn
 
 STREAM = False
-CNN_MODEL_DIR = "/src/model/3cnn_1conv_10epoch_s28.ckpt"
+CNN_MODEL_DIR = "/model/traffic_sign_detect/3cnn_1conv_10epoch_s28.ckpt"
 IMG_SIZE = 28
 
 LABEL = {
@@ -32,14 +32,8 @@ LABEL = {
 }
 
 
-
-
-
 rospack = rospkg.RosPack()
 path = rospack.get_path('traffic_sign')
-data_path = path + "/src/ros_data.dat"
-print data_path
-# model = cv2.ml.SVM_load(data_path)
 
 x_placeholder = tf.placeholder(tf.float32, [None, IMG_SIZE, IMG_SIZE, 3])
 y_conv, keep_prob = deepnn(x_placeholder)

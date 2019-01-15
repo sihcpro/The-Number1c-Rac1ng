@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import roslib
-roslib.load_manifest('Team503')
+roslib.load_manifest('team503')
 import rospy
 import rospkg
 
 from sensor_msgs.msg import CompressedImage, Image
-from traffic_sign.msg import traffic_sign_msg
+# from team503.msg import traffic_sign_msg
 from std_msgs.msg import Int64
 
 import cv2, time
@@ -38,7 +38,7 @@ LABEL = {
 
 
 rospack = rospkg.RosPack()
-path = rospack.get_path('Team503')
+path = rospack.get_path('team503')
 
 x_placeholder = tf.placeholder(tf.float32, [None, IMG_SIZE, IMG_SIZE, 3])
 y_conv, keep_prob = deepnn(x_placeholder)
@@ -118,7 +118,7 @@ def detect(frame):
 
                 if label[0] != 8:
                     # logging.warning(label[0], str(_y_conv))
-                    print label
+                    # print label
                     cv2.rectangle(
                         frame,
                         (x, y),
@@ -142,8 +142,8 @@ VERBOSE = False
 
 class detect_sign:
     def __init__(self):
-        self.image_sub = rospy.Subscriber("Team503_image/compressed", CompressedImage, self.callback, queue_size=1)
-        self.pub = rospy.Publisher('detect_traffic_sign/message', Int64, queue_size=2)
+        self.image_sub = rospy.Subscriber("team503_image/compressed", CompressedImage, self.callback, queue_size=1)
+        self.pub = rospy.Publisher('team503_detect_traffic_sign/message', Int64, queue_size=2)
         # self.msg = traffic_sign_msg()
         # self.default_empty_sign = 0
         # self.msg.traffic_sign_type = self.default_empty_sign

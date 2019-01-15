@@ -1,0 +1,4 @@
+<launch>
+	<node name="team503_lane_detect" pkg="team503" type="team503_lane_detect" output="screen" args="_image_transport:=compressed" />
+	<node name="team503_detect_traffic_sign" pkg="team503" type="detect_traffic_sign" output="screen"/>
+</launch>

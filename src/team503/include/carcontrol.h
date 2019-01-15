@@ -9,11 +9,30 @@
 
 #include <vector>
 #include <math.h>
+#include <ctime>
+#include <time.h>
+#include <chrono>
 
 #include "detectlane.h"
 
 using namespace std;
 using namespace cv;
+
+
+class Timer
+{
+public:
+    Timer() : beg_(clock_::now()) {}
+    void reset() { beg_ = clock_::now(); }
+    double elapsed() const { 
+        return std::chrono::duration_cast<second_>
+            (clock_::now() - beg_).count(); }
+
+private:
+    typedef std::chrono::high_resolution_clock clock_;
+    typedef std::chrono::duration<double, std::ratio<1> > second_;
+    std::chrono::time_point<clock_> beg_;
+};
 
 class CarControl 
 {
@@ -28,6 +47,15 @@ public:
     int goodChoise = chooseStraight;
 
     void setVelocity(float, float);
+    Timer now;
+    double timeDiff = 0;
+    double velocityNow = 0;
+    double distance = 0;
+    double errorAngleDetect = 0;
+    float preError;
+    float laneWidth = 20;
+
+    void setLandWidth(float);
 
 private:
     float errorAngle(const Point &dst);
@@ -39,16 +67,13 @@ private:
 
     Point carPos;
 
-    float laneWidth = 30;
 
-    float minVelocity = 10;
-    float maxVelocity = 50;
-    float velocity = 0;
-    float aRun = 5;
-    float aStop = 15;
-    // t_ now;
+    double minVelocity = 10;
+    double maxVelocity = 50;
+    double velocity = 0;
+    double aRun = 5;
+    double aStop = 15;
 
-    float preError;
 
     float kP;
     float kI;

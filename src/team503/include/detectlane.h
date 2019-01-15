@@ -35,6 +35,17 @@ public:
     static int carMaxSpeed;
 
     static Point null; // 
+
+    void setCarStatus(double, double, double);
+    float laneWidth = 30;
+
+    bool turning = false;
+    double errorAngle = 0;
+    int weightErrorAngle = 3;
+    int percentEscapeObstacles = 70;
+    int carMaxSpeedTurning = 35;
+    int amountStepToTurning = 150;
+
 private:
     Mat preProcess(const Mat &src);
 
@@ -46,6 +57,11 @@ private:
     void detectLeftRight(const vector<vector<Point> > &points);
     void detectLeftRight2(const vector<vector<Point> > &points);
     Mat laneInShadow(const Mat &src);
+
+    void initDisplacement();
+    void jumpDisplacement(const vector<Point>&, vector<Point>&);
+    void getLaneOnOldLane(const vector< vector<Point> >&, const vector<Point>&, vector<Point>&, int&);
+    void fillLane(const vector< vector<Point> >&, vector<Point>&, vector<Point>&);
 
     int minThreshold[3] = {0, 0, 180};
     int maxThreshold[3] = {179, 30, 255};
@@ -62,7 +78,24 @@ private:
     int maxL;
     int maxR;
 
+    double carSpeed;
+    double carTurningAngle;
+    double carTimeDiff;
+    double carDisplacement;
+
+    int weightTurn = 2;
+    int weightRun  = 7;
+
+    int maxErrorLaneDetected = 5;
+    int minCountMatchLaneDetected = 7;
+
+    vector< vector<Point> > displacement;
     vector<Point> leftLane, rightLane;
+    vector<Point> leftLane2, rightLane2;
+    vector<Point> leftLaneOld, rightLaneOld;
+    vector<Point> leftLaneDetected, rightLaneDetected;
+    int leftLaneCount, rightLaneCount;
+    int leftLane2Count, rightLane2Count;
     vector< vector<Point> > otherLane;
 };
 

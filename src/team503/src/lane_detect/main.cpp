@@ -26,8 +26,14 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
         // cv::imshow("View", cv_ptr->image);
         waitKey(1);
+        detect->setCarStatus(car->velocityNow, (double)car->preError, car->timeDiff);
         detect->update(cv_ptr->image);
+
+        car->laneWidth = (double) detect->percentEscapeObstacles / 100.0 * (detect->laneWidth);
+        car->errorAngleDetect = detect->errorAngle;
+
         car->driverCar(detect->getLeftLane(), detect->getRightLane(), detect->getMax());
+        // ROS_INFO("Time flip: %lf", car->now.elapsed());
     }
     catch (cv_bridge::Exception& e)
     {
@@ -49,23 +55,27 @@ void videoProcess()
     }
 }
 
-int max_effect_times = 50;
+int max_effect_times = 150;
 void trafficSignCallback(const std_msgs::Int64::ConstPtr traffic_sign_type) {
     long long type = traffic_sign_type->data;
     switch(type) {
         case 2:
+            max_effect_times = detect->amountStepToTurning;
             if(car->goodChoise != car->chooseLeft)
                 ROS_INFO("Nhan dien bien bao re trai\n");
             car->goodChoise = car->chooseLeft;
             traffic_sign_effect = max_effect_times;
-            car->setVelocity(10,30);
+            car->setVelocity(10, detect->carMaxSpeedTurning);
+            detect->turning = true;
             break;
         case 3:
+            max_effect_times = detect->amountStepToTurning;
             if(car->goodChoise != car->chooseRight)
                 ROS_INFO("Nhan dien bien bao re phai\n");
             car->goodChoise = car->chooseRight;
             traffic_sign_effect = max_effect_times;
-            car->setVelocity(10,30);
+            car->setVelocity(10, detect->carMaxSpeedTurning);
+            detect->turning = true;
             break;
         default:
             if(traffic_sign_effect > 1) {
@@ -74,7 +84,8 @@ void trafficSignCallback(const std_msgs::Int64::ConstPtr traffic_sign_type) {
                 ROS_INFO("Tap trung di thang\n");
                 traffic_sign_effect--;
                 car->goodChoise = car->chooseStraight;
-                car->setVelocity(10,50);
+                car->setVelocity(10, DetectLane::carMaxSpeed);
+                detect->turning = false;
             }
     }
 }
@@ -89,9 +100,9 @@ int main(int argc, char **argv)
     // cv::namedWindow("debug3");
     // cv::namedWindow("View");
     // cv::namedWindow("Binary");
-    // cv::namedWindow("Threshold");
+    cv::namedWindow("Threshold");
     // cv::namedWindow("Bird View");
-    cv::namedWindow("Lane Detect");
+    // cv::namedWindow("Lane Detect");
 
     detect = new DetectLane();
     car = new CarControl();
@@ -101,8 +112,8 @@ int main(int argc, char **argv)
 
         ros::NodeHandle nh;
         image_transport::ImageTransport it(nh);
-        image_transport::Subscriber sub = it.subscribe("Team503_image", 1, imageCallback);
-        ros::Subscriber sub2 = nh.subscribe("detect_traffic_sign/message", 2, trafficSignCallback);
+        image_transport::Subscriber sub = it.subscribe("team503_image", 1, imageCallback);
+        ros::Subscriber sub2 = nh.subscribe("team503_detect_traffic_sign/message", 2, trafficSignCallback);
         ros::spin();
     } else {
         videoProcess();

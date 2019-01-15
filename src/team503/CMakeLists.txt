@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(Team503)
+project(team503)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -121,7 +121,7 @@ generate_messages(
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES api_lane_detection
+  LIBRARIES ${PROJECT_NAME}_lane_detection
   CATKIN_DEPENDS roscpp
   DEPENDS system_lib
 )
@@ -138,7 +138,7 @@ include_directories(
 )
 
 ## Declare a C++ library
-add_library(api_lane_detection
+add_library(${PROJECT_NAME}_lane_detection
   src/lane_detect/detectlane.cpp
   src/lane_detect/carcontrol.cpp
 )
@@ -152,7 +152,7 @@ add_library(api_lane_detection
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/lane_detect/test_msgs_node.cpp)
-add_executable(lane_detect src/lane_detect/main.cpp)
+add_executable(${PROJECT_NAME}_lane_detect src/lane_detect/main.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -163,15 +163,15 @@ add_executable(lane_detect src/lane_detect/main.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(lane_detect ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_lane_detect ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(
-  lane_detect
-  api_lane_detection
+  ${PROJECT_NAME}_lane_detect
+  ${PROJECT_NAME}_lane_detection
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
   ${Boost_LIBRARIES}
@@ -197,7 +197,7 @@ target_link_libraries(
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
-install(TARGETS api_lane_detection ${ADDITIONAL_EXECUTABLES}
+install(TARGETS ${PROJECT_NAME}_lane_detection ${ADDITIONAL_EXECUTABLES}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
